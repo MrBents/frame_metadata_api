@@ -1,6 +1,4 @@
 from flask import Flask
-# from handlers.payload_builder import VroomPayloadBuilder
-# import requests
 from utils.dropbox_manager import DropboxManager
 from utils.utils import tokenIdToImagePath, tokenIdToMetadataPath, synthetizeMetadata
 import json
@@ -56,6 +54,7 @@ def intializeMetadata(token_id, x, y):
 
 @app.route('/frame/update/<token_id>')
 def updateImage(token_id):
+    # TODO: Add logic for updating metadata.
     return "ok\n"
 
 
