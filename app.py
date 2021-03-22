@@ -23,15 +23,19 @@ def baseUri():
 
 
 @app.route('/frame/<token_id>')
-def tokenUri():
+def tokenUri(token_id):
     # TODO: return token metadata
-    pass
+    return "ok\n"
 
 
 @app.route('/frame/initialize/<token_id>')
-def intializeMetadata():
+def intializeMetadata(token_id):
     # TODO: (1) save blanc image, (2) save token metadata
-    pass
+    return "ok\n"
+
+@app.route('/frame/update/<token_id>')
+def updateImage(token_id):
+    return "ok\n"
 
 
 if __name__ == '__main__':
