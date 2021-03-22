@@ -1,4 +1,5 @@
 import dropbox
+import json
 
 
 class DropboxManager:
@@ -34,3 +35,7 @@ class DropboxManager:
         with open(file_to, 'wb') as f:
             metadata, res = self.dbx.files_download(file_path)
             f.write(res.content)
+
+    def preview_metadata(self, file_path):
+        metadata, res = self.dbx.files_download(file_path)
+        return json.loads(res.content)

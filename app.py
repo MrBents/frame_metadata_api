@@ -18,19 +18,21 @@ dropbox_manager = DropboxManager(api_key)
 
 @app.route('/frame')
 def baseUri():
-    # TODO: return json contract
     return {
         "description": "Friendly frames.",
         "external_link": "https://github.com/mrbents/",
         "image": "https://example.com/image.png",
-        "name": "Canvas Frames"
+        "name": "Canvas Frames",
+        "column": "column",
+        "row": "row"
     }
 
 
 @app.route('/frame/<token_id>')
 def tokenUri(token_id):
-    # TODO: return token metadata
-    return "ok\n"
+    # recalculate dropbox path.
+    metadata_path = tokenIdToMetadataPath(token_id)
+    return dropbox_manager.preview_metadata(metadata_path)
 
 
 @app.route('/frame/initialize/<token_id>/<x>/<y>')
