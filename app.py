@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from utils.dropbox_manager import DropboxManager
 from utils.utils import tokenIdToImagePath, tokenIdToMetadataPath, synthetizeMetadata
 import json
@@ -18,7 +18,6 @@ dropbox_manager = DropboxManager(api_key)
 def baseUri():
     return {
         "description": "Friendly frames.",
-        "external_link": "https://github.com/mrbents/",
         "image": "https://example.com/image.png",
         "name": "Canvas Frames",
         "column": "column",
@@ -48,14 +47,16 @@ def intializeMetadata(token_id, x, y):
     temp.write(json.dumps(metadata_dict).encode('utf-8'))
     dropbox_manager.upload_file(temp, dropbox_metadata_path)
     temp.close()
+    return "ok"
 
-    return "ok\n"
 
-
-@app.route('/frame/update/<token_id>')
+@app.route('/frame/update/<token_id>', methods=['POST'])
 def updateImage(token_id):
-    # TODO: Add logic for updating metadata.
-    return "ok\n"
+    if request.method == 'POST':
+        dropbox_img_path = tokenIdToImagePath(token_id)
+        file = request.files['file']
+        dropbox_manager.upload_file(file, dropbox_img_path)
+        return "ok"
 
 
 if __name__ == '__main__':
